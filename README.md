@@ -36,8 +36,6 @@ Run locally (PHP 8.1+):
 
     php -S localhost:8765 -t site
 
-The page carries `noindex` until the owner decides to make it public.
-
 ## Deploy
 
     pwsh -NoProfile -File scripts\deploy.ps1 -Server <host> -User <user> -Go
