@@ -1,4 +1,4 @@
-# Meniny (meniny.cukivan.me)
+# Meniny (cukivan.me/meniny)
 
 A citizen proposal to bring the Slovak name-day calendar in line with the names people
 actually bear. The calendar still headlines names almost nobody has (Pankrác, Servác,
@@ -43,5 +43,4 @@ The page carries `noindex` until the owner decides to make it public.
     pwsh -NoProfile -File scripts\deploy.ps1 -Server <host> -User <user> -Go
 
 Without `-Go` it only lists what would be uploaded. Nothing on the server is deleted, so
-votes survive deploys. The subdomain and its HTTPS certificate are created in the WebHouse
-panel by the owner.
+votes survive deploys. The site is a subpage of cukivan.me, so it shares its certificate.

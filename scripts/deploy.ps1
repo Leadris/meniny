@@ -1,5 +1,5 @@
 <#
-  Deploy site/ to meniny.cukivan.me over FTPS (same WebHouse account as the sibling sites).
+  Deploy site/ to cukivan.me/meniny over FTPS (same WebHouse account as the sibling sites).
 
   Server and user are not hardcoded because this repository is meant to be public;
   pass them or set DEPLOY_FTP_SERVER / DEPLOY_FTP_USER (same values as varim/scripts/deploy.ps1).
@@ -16,9 +16,10 @@
 param(
   [string]$Server = $env:DEPLOY_FTP_SERVER,
   [string]$User = $env:DEPLOY_FTP_USER,
-  # WebHouse serves <name>.cukivan.me from _sub_cukivan_me/<name>.
-  [string]$Root = '/_sub_cukivan_me/meniny',
-  [string]$CheckUrl = 'https://meniny.cukivan.me/',
+  # A subpage of the main site rather than a subdomain: it reuses the existing HTTPS
+  # certificate, so nothing has to be set up in the WebHouse panel first.
+  [string]$Root = '/www_root_cukivan_me/meniny',
+  [string]$CheckUrl = 'https://cukivan.me/meniny/',
   [switch]$Prompt,
   [switch]$Go
 )
@@ -58,7 +59,7 @@ try {
       if ($page -match 'Meniny pod') { Write-Host "OK: $CheckUrl serves the site." }
       else { Write-Warning "$CheckUrl does not serve the site yet." }
     } catch {
-      Write-Warning "$CheckUrl cannot be opened: $($_.Exception.Message) (missing certificate for the subdomain?)"
+      Write-Warning "$CheckUrl cannot be opened: $($_.Exception.Message) "
     }
   }
 } finally {

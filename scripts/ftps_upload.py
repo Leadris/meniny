@@ -70,7 +70,8 @@ def main():
             # WebHouse serves <name>.<domain> from _sub_<domain>/<name> as soon as the folder
             # exists; until then the wildcard shows the main site. Create only that one level.
             parent = root.rsplit("/", 1)[0] or "/"
-            if parent.rsplit("/", 1)[-1].startswith("_sub_"):
+            # The same holds one level below the main web root (a subpage of the main site).
+            if parent.rsplit("/", 1)[-1].startswith(("_sub_", "www_root_")):
                 try:
                     ftp.cwd(parent)
                     if dry:
