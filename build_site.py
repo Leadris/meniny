@@ -7,12 +7,38 @@ The same file is read by site/api/vote.php to decide which votes are valid.
 import difflib
 import json
 import os
+import re
 
 from analyze import SK_POPULATION, fold, load_counts, parse_calendar
 
 MAX_CANDIDATES = 8   # more options than this do not fit one phone screen
 MIN_SEARCHABLE = 3   # names borne by 1-2 people could point at an individual
+ORIGINS = os.path.join("sources", "name_origins.json")
+ORIGIN_WORDS = re.compile(
+    r"pôvod|význam|znamen|pochádz|odvoden|hebrej|gréck|latin|slovansk|germán|nemeck|"
+    r"form[ao]u? mena|podob[ao]u? mena|zdrobnenin|variant", re.I)
+MAX_ORIGIN = 280    # characters; the card is read on a phone
 SIMILARITY = 0.75    # low enough for Emma -> Ema, high enough to skip unrelated names
+
+
+def origin_text(intro):
+    """Pick the sentences of a Wikipedia intro that say where the name comes from.
+
+    Most intros open with "X is a male first name. Its name day is ..."; those
+    lines repeat what the card already shows, so only sentences about origin or
+    meaning are kept, quoted verbatim so nothing is invented.
+    """
+    picked, length = [], 0
+    # A sentence must start with a capital: otherwise "napr. v" would end one early.
+    for sentence in re.split(r"(?<=[.!?])\s+(?=[A-ZÁČĎÉÍĽĹŇÓŠŤÚÝŽ„])", " ".join(intro.split())):
+        sentence = sentence.strip()
+        if not ORIGIN_WORDS.search(sentence) or "eniny" in sentence:
+            continue
+        if length + len(sentence) > MAX_ORIGIN:
+            break
+        picked.append(sentence)
+        length += len(sentence)
+    return " ".join(picked)
 
 
 def main():
@@ -84,6 +110,14 @@ def main():
         if counts.get(key, 0) < MIN_SEARCHABLE:
             names.append([label[key], counts.get(key, 0), "official", date_of[key]])
 
+    with open(ORIGINS, encoding="utf-8") as fh:
+        articles = json.load(fh)
+    origins = {}
+    for name, article in articles.items():
+        text = origin_text(article["text"])
+        if text:
+            origins[name] = [text, article["title"]]
+
     covered = sum(c for k, c in counts.items() if status.get(k) == "official")
     payload = {
         "meta": {"cities": cities, "people": total,
@@ -92,12 +126,14 @@ def main():
                  "official_names": len(official_keys)},
         "days": days,
         "names": names,
+        "origins": origins,
     }
     os.makedirs(os.path.join("site", "data"), exist_ok=True)
     path = os.path.join("site", "data", "names.json")
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, ensure_ascii=False, separators=(",", ":"))
-    print("wrote", path, os.path.getsize(path), "bytes;", len(days), "days,", len(names), "names")
+    print("wrote", path, os.path.getsize(path), "bytes;", len(days), "days,", len(names), "names,",
+          len(origins), "origins")
 
 
 if __name__ == "__main__":

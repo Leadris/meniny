@@ -21,6 +21,10 @@ vote which name a day deserves most.
   long customary list. Used only to know on which day an unofficial name is usually
   celebrated, so a proposal can name a concrete date.
 
+- `sources/name_origins.json`: intro of each official name's article on sk.wikipedia
+  (CC BY-SA 4.0). The site quotes only the sentences about origin or meaning and links
+  the article.
+
 The commission's rules shape the proposal: Christian names are never removed, new names
 follow the traditional ones, and a day holds at most four names. So `analyze.py` only
 proposes additions to free slots, never replacements.
@@ -32,6 +36,7 @@ National figures are the sample count scaled by population, so treat them as est
 
     python analyze.py      # CSV reports into out/ and a summary on stdout
     python build_site.py   # site/data/names.json, the only data file the site reads
+    python fetch_origins.py  # refresh sources/name_origins.json from sk.wikipedia (rarely)
 
 Names are matched ignoring case and diacritics, and only the first given name counts.
 For a name missing from the official calendar the site shows the closest official name

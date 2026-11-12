@@ -141,6 +141,8 @@ input[type="date"] { width: auto; }
 .card-name { font-family: Georgia, "Times New Roman", serif; font-size: 34px; line-height: 1.1; font-weight: 700; overflow-wrap: anywhere; }
 .card-count { font-size: 17px; }
 .card-day { font-size: 15px; }
+.card-origin { padding-top: 8px; border-top: 1px dashed var(--line); font-size: 15px; color: var(--muted); }
+.list .link { padding: 0; font-weight: 400; font-size: 15px; white-space: nowrap; }
 .share, .quiz-option { min-height: 48px; border-radius: 6px; font: inherit; font-weight: 700; cursor: pointer; }
 .share { margin-top: 6px; padding: 8px 16px; border: 0; background: var(--red); color: var(--card); }
 .quiz { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }

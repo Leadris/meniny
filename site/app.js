@@ -93,6 +93,7 @@
       });
       if (!response.ok) throw new Error(String(response.status));
       votes = await response.json();
+      renderResults();
       status.textContent = 'Hlas za meno ' + name + ' je zapísaný. Šípkou prejdi na ďalší deň.';
     } catch (error) {
       status.className = 'status err';
@@ -144,6 +145,16 @@
     }
     if (target) line.append(button('link', 'Otvoriť deň', () => showDay(dateOf(target), true)));
     card.append(line);
+
+    const origin = data.origins[name];
+    if (origin) {
+      const about = el('p', 'card-origin', origin[0] + ' ');
+      const source = el('a', '', 'Wikipédia');
+      source.href = 'https://sk.wikipedia.org/wiki/' + encodeURIComponent(origin[1].replace(/ /g, '_'));
+      source.rel = 'noopener';
+      about.append('(', source, ')');
+      card.append(about);
+    }
 
     const shareText = name + ': ' + (count === 0 ? 'vo vzorke ho nenosí nikto' : 'asi ' + nf.format(estimate(count)) + ' ľudí na Slovensku')
       + '. Ako je na tom tvoje meno?';
@@ -216,6 +227,31 @@
     }
   }
 
+  // ---- voting results -------------------------------------------------------
+  function renderResults() {
+    const rows = [];
+    let total = 0;
+    for (const [day, tally] of Object.entries(votes.days)) {
+      const ranked = Object.entries(tally).sort((a, b) => b[1] - a[1]);
+      const sum = ranked.reduce((n, r) => n + r[1], 0);
+      total += sum;
+      rows.push({ day, sum, leader: ranked[0][0], share: ranked[0][1] / sum });
+    }
+    rows.sort((a, b) => b.sum - a.sum || a.day.localeCompare(b.day));
+    $('results-note').textContent = total === 0
+      ? 'Zatiaľ nikto nehlasoval. Môžeš byť prvý.'
+      : 'Spolu ' + votesLabel(total) + ' v ' + rows.length + (rows.length === 1 ? ' dni' : ' dňoch') + ' kalendára. Dni s najväčším záujmom:';
+    const target = $('results');
+    target.replaceChildren();
+    for (const row of rows.slice(0, 10)) {
+      const item = el('li');
+      const label = el('span', 'n', row.leader);
+      label.append(el('span', 'd', dateLabel(row.day)));
+      item.append(label, button('link', votesLabel(row.sum) + ' · ' + Math.round(100 * row.share) + ' %', () => showDay(dateOf(row.day), true)));
+      target.append(item);
+    }
+  }
+
   // ---- lists ---------------------------------------------------------------
   function renderLists() {
     const lists = {
@@ -259,7 +295,8 @@
     try {
       const response = await fetch('api/vote.php');
       if (response.ok) { votes = await response.json(); renderDay(); }
-    } catch (error) { /* read-only mode */ }
+      renderResults();
+    } catch (error) { renderResults(); /* read-only mode */ }
   }
 
   const today = () => new Date(2024, new Date().getMonth(), new Date().getDate());
