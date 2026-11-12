@@ -134,6 +134,23 @@ input[type="date"] { width: auto; }
 .list .n { font-weight: 700; }
 .list .d { color: var(--muted); font-size: 14px; margin-left: 6px; font-weight: 400; }
 .list .c { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ballot .tag.new { color: var(--ok); }
+.card { margin-bottom: 12px; padding: 16px; background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--red); border-radius: 6px; }
+.card p { margin: 0 0 6px; }
+.card-tier { color: var(--red); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.card-name { font-family: Georgia, "Times New Roman", serif; font-size: 34px; line-height: 1.1; font-weight: 700; overflow-wrap: anywhere; }
+.card-count { font-size: 17px; }
+.card-day { font-size: 15px; }
+.share, .quiz-option { min-height: 48px; border-radius: 6px; font: inherit; font-weight: 700; cursor: pointer; }
+.share { margin-top: 6px; padding: 8px 16px; border: 0; background: var(--red); color: var(--card); }
+.quiz { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.quiz-option { display: grid; gap: 2px; align-content: center; min-height: 88px; padding: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); overflow-wrap: anywhere; }
+.quiz-option .name { font-family: Georgia, "Times New Roman", serif; font-size: 22px; }
+.quiz-option .count { font-size: 14px; font-weight: 400; color: var(--muted); }
+.quiz-option.right { border-color: var(--ok); box-shadow: inset 0 0 0 2px var(--ok); }
+.quiz-option.wrong { opacity: .6; }
+.quiz-option:focus-visible, .share:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+.quiz-note { color: var(--muted); }
 .story h3 { margin: 28px 0 6px; font-family: Georgia, "Times New Roman", serif; font-size: 19px; line-height: 1.3; color: var(--red); text-wrap: balance; }
 .story p { margin: 0 0 12px; }
 .about { padding: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 6px; font-size: 15px; }

@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Meniny podľa toho, ako sa naozaj voláme</title>
-<meta name="description" content="Slovenský kalendár menín porovnaný s menami, ktoré ľudia naozaj nosia. Pozri si čísla a hlasuj, ktoré meno má byť v kalendári hlavné.">
+<meta name="description" content="Oficiálny slovenský kalendár menín porovnaný s menami, ktoré ľudia naozaj nosia. Zisti, koľko máš menovcov, zahraj sa a hlasuj.">
 <meta property="og:title" content="Meniny podľa toho, ako sa naozaj voláme">
-<meta property="og:description" content="Pankrác má meniny, Sofia nie. Pozri si čísla a hlasuj, ktoré meno má byť v kalendári hlavné.">
+<meta property="og:description" content="Koľko ľudí sa volá ako ty a kedy máš naozaj meniny? Zisti to, zahraj sa a hlasuj.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://cukivan.me/meniny/">
 <link rel="canonical" href="https://cukivan.me/meniny/">
@@ -15,12 +15,21 @@
 </head>
 <body>
 <header class="top">
-  <p class="kicker">Kalendár menín · občiansky návrh</p>
+  <p class="kicker">Kalendár menín · občiansky podklad</p>
   <h1>Meniny podľa toho, ako sa naozaj voláme</h1>
-  <p class="lead">V kalendári má meniny Pankrác, Servác aj Svätopluk, ale Sofia, Nela či Tobias v ňom hlavné miesto nemajú. Pozri si čísla a hlasuj, ktoré meno má byť v daný deň hlavné.</p>
+  <p class="lead">Áno, svet má väčšie problémy. Tento je aspoň riešiteľný. Oficiálny kalendár menín pokrýva asi <strong><span id="covered">92</span> %</strong> z nás. Pankrác, Servác a Prokop v ňom majú svoj deň, hoci ich vo vzorke nenosí nikto, kým Ildikó, Zoe či Liam ešte čakajú na pozvánku.</p>
+  <p class="lead">Zisti, koľko máš menovcov, zahraj sa a pomôž spraviť v kalendári trochu poriadok.</p>
 </header>
 
 <main>
+  <section aria-labelledby="search-title">
+    <h2 id="search-title">Koľko ľudí sa volá ako ty?</h2>
+    <p class="hint">Žiadna registrácia, žiadny horoskop. Len čísla a jedna nevinná poznámka.</p>
+    <label class="sr" for="q">Meno</label>
+    <input type="search" id="q" placeholder="Napíš svoje meno" autocomplete="off">
+    <div id="result" class="result" aria-live="polite"></div>
+  </section>
+
   <section class="leaf" aria-labelledby="day-title">
     <div class="leaf-head">
       <button type="button" id="prev" aria-label="Predchádzajúci deň">‹</button>
@@ -42,37 +51,40 @@
     </div>
   </section>
 
-  <section aria-labelledby="search-title">
-    <h2 id="search-title">Koľko ľudí sa volá ako ty?</h2>
-    <label class="sr" for="q">Meno</label>
-    <input type="search" id="q" placeholder="Napíš meno, napr. Svätopluk" autocomplete="off">
-    <div id="result" class="result" aria-live="polite"></div>
+  <section aria-labelledby="quiz-title">
+    <h2 id="quiz-title">Koho je na Slovensku viac?</h2>
+    <p class="hint">Ťukni na meno, ktoré podľa teba nosí viac ľudí. Pozor, návykové. Za rekord nie je nič, iba dobrý pocit.</p>
+    <div class="quiz" id="quiz"></div>
+    <p class="status quiz-note" id="quiz-note" role="status"></p>
   </section>
 
   <section aria-labelledby="dead-title">
     <h2 id="dead-title">Mená v kalendári, ktoré takmer nikto nenosí</h2>
-    <p class="hint">Hlavné mená kalendára s najmenším počtom nositeľov vo vzorke.</p>
+    <p class="hint">Mená oficiálneho kalendára s najmenším odhadovaným počtom nositeľov. Nič proti nim: ak nejakého Pankráca poznáš, pozdravuj ho, je vzácnejší než výhra v lotérii.</p>
     <ol class="list" id="dead"></ol>
     <button type="button" class="link more" data-list="dead">Ukázať viac</button>
   </section>
 
   <section aria-labelledby="missing-title">
-    <h2 id="missing-title">Bežné mená bez hlavného miesta</h2>
-    <p class="hint">Mená, ktoré nosia tisíce ľudí, no v kalendári sú len vedľajšie alebo chýbajú.</p>
+    <h2 id="missing-title">Mená, ktoré v kalendári nenájdeš</h2>
+    <p class="hint">Väčšinou ide o inú podobu mena, ktoré v kalendári je, takže čokoláda ťa neminie. Ostatné sú kandidáti na doplnenie.</p>
     <ol class="list" id="missing"></ol>
     <button type="button" class="link more" data-list="missing">Ukázať viac</button>
   </section>
 
   <section class="story" aria-labelledby="story-title">
     <h2 id="story-title">Odkiaľ sa meniny vzali</h2>
-    <p class="hint">Krátke čítanie o tom, prečo má Pankrác svoj deň a prečo to nemusí byť navždy.</p>
+    <p class="hint">Krátke čítanie ku káve o tom, prečo má Pankrác svoj deň a Zoe zatiaľ nie.</p>
 
     <h3>Najprv to bol sviatok svätca, nie tvoj</h3>
     <p>Meniny sú kresťanský zvyk. Cirkev si každý deň v roku pripomínala niektorého svätca a kto nosil jeho meno, slávil s ním. Deň narodenia bol dlho vedľajší: v matrike sa zapisoval krst a dieťa často dostalo meno podľa svätca, na ktorého deň sa narodilo alebo krstilo. Kalendár teda mená nielen oslavoval, on ich aj rozdával.</p>
     <p>Preto je v ňom dodnes toľko mien, ktoré znejú ako zo stredovekej kroniky. Pankrác, Servác a Bonifác, traja „zamrznutí“ z polovice mája, sú v kalendári kvôli pranostike, nie kvôli tomu, že by sme ich stretávali na ulici.</p>
 
     <h3>Potom sa kalendár odpútal od kostola</h3>
-    <p>Postupne do kalendára pribúdali mená, ktoré žiadneho svätca nemali: slovanské ako Svätopluk, Drahoslav či Bohuslava, neskôr módne a prevzaté. Z cirkevného zoznamu sa stal občiansky zvyk, ktorý držia veriaci aj neveriaci. Lenže kalendár sa mení pomaly a mená rýchlo. Rodičia dnes vyberajú Sofiu, Nelu a Tobiasa, kým v kalendári ostávajú na čestnom mieste mená, ktoré naposledy dostal niečí pradedo.</p>
+    <p>Postupne do kalendára pribúdali mená, ktoré žiadneho svätca nemali: slovanské ako Svätopluk, Drahoslav či Bohuslava, neskôr módne a prevzaté. Z cirkevného zoznamu sa stal občiansky zvyk, ktorý držia veriaci aj neveriaci.</p>
+
+    <h3>Kto sa o kalendár stará dnes</h3>
+    <p>Na Slovensku má kalendár menín svojho správcu: Kalendárovú komisiu pri ministerstve kultúry. Sedia v nej jazykovedci, zástupcovia ministerstiev a vydavatelia kalendárov. Od roku 2016 pridala vyše dvadsať mien, medzi nimi Jonáša, Nikoletu, Radku či Matiasa, a berie podnety od ľudí. Drží sa pri tom pravidiel: kresťanské mená sa nevyraďujú, nové prichádzajú až za tradičné a na jeden deň pripadajú najviac štyri.</p>
 
     <h3>Inde to už vyriešili</h3>
     <p>Fínsko svoj kalendár menín pravidelne reviduje a pri zaraďovaní mien sa pozerá aj na to, koľko ľudí ich nosí. Švédsko kalendár v posledných desaťročiach tiež viackrát prepracovalo. Lotyši majú dokonca jeden deň v máji vyhradený pre všetkých, ktorých meno v kalendári nie je. V Grécku či Poľsku sa meniny tradične slávili viac než narodeniny, u nás sú skôr dôvodom na čokoládu od kolegov. Nikde však nie je napísané, že zoznam z minulého storočia musí platiť naveky.</p>
@@ -84,7 +96,7 @@
     <p>V starom perzskom, zoroastrijskom kalendári malo meno každý z tridsiatich dní mesiaca aj každý z dvanástich mesiacov, vždy po niektorom božstve. Keď sa meno dňa stretlo s menom mesiaca, bol sviatok. Tak vznikol Mehregán, deň Mehr v mesiaci Mehr, ktorý sa v Iráne slávi dodnes. Boli to meniny, len nie ľudské.</p>
 
     <h3>A my?</h3>
-    <p>Kalendár menín nie je zákon ani dogma. Je to dohoda o tom, komu v ktorý deň zavoláme. Tento web nechce nikomu meniny brať. Chce len, aby v kalendári našli svoje meno aj ľudia, ktorí sa narodili v tomto storočí. Čísla sú hore, hlasovanie tiež.</p>
+    <p>Kalendár menín nie je zákon ani dogma. Je to dohoda o tom, komu v ktorý deň zavoláme. Tento web nechce nikomu meniny brať ani robiť prácu komisie nanovo. Chce jej k nej pridať to, čo doteraz chýbalo: verejné čísla o tom, ako sa naozaj voláme, a hlas ľudí, ktorých sa to týka. Meniny nie sú to najdôležitejšie na svete. Práve preto sa pri nich dá spraviť poriadok s úsmevom.</p>
   </section>
 
   <section class="about" aria-labelledby="about-title">
@@ -93,8 +105,9 @@
     <ul>
       <li>Počty sú z otvorených dát miest, ktoré zverejňujú počet obyvateľov podľa krstného mena. Celoštátny register verejný nie je, preto je odhad za Slovensko len orientačný.</li>
       <li>Vo vzorke sú mestá, nie dediny, a medzi nimi Komárno a Dunajská Streda, takže maďarské mená sú zastúpené viac než v celej krajine.</li>
-      <li>Kalendár je zo slovenskej Wikipédie a od oficiálneho kalendária ministerstva kultúry sa môže miestami líšiť.</li>
-      <li>Hlasovať sa dá raz za každý deň v kalendári; nový hlas nahradí starý. Ukladáme len nezvratný odtlačok IP adresy, aby sa hlasy nedali násobiť. Žiadne mená ani e-maily.</li>
+      <li>Kalendár je <a href="https://www.culture.gov.sk/sk/oficialne-kalendarium">oficiálne kalendárium ministerstva kultúry</a> (verzia 2025). Návrhy na doplnenie berieme z dlhšieho zaužívaného zoznamu na slovenskej Wikipédii.</li>
+      <li>Podobu mena porovnávame automaticky, takže „najbližšie meno“ je pomôcka, nie úradné stanovisko.</li>
+      <li>Hlasovať sa dá raz za každý deň v kalendári; nový hlas nahradí starý. Výsledky chceme odovzdať kalendárovej komisii ako podnet. Ukladáme len nezvratný odtlačok IP adresy, aby sa hlasy nedali násobiť. Žiadne mená ani e-maily.</li>
     </ul>
     <p>Dáta, skripty aj kód stránky sú otvorené. Chybu alebo návrh pošli cez <a id="repo" href="https://github.com/Leadris/meniny">GitHub</a>.</p>
   </section>
