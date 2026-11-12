@@ -1,0 +1,4 @@
+__pycache__/
+# Written by vote.php at runtime; real votes and the hashing salt live only on the server.
+site/api/store/votes.json
+site/api/store/salt.txt
